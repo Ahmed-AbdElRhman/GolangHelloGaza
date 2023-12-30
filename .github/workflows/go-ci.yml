@@ -42,16 +42,19 @@ jobs:
       - name: Set Up Docker
         uses: actions/setup-docker@v2
 
+      - name: Tag Existing Docker Image
+        run: docker tag 20170044/gaza-runimage:latest 20170044/gaza-runimage:$(date '+%Y%m%d%H%M%S')
+      
       - name: Build Docker Image
-        run: docker build -t your-docker-registry/your-repo:latest .
+        run: docker build -t 20170044/gaza-runimage:latest .
       
       - name: Log in to Docker Registry
         uses: docker/login-action@v1
         with:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
-          registry: your-docker-registry
+          registry: 20170044
 
       - name: Push Docker Image
-        run: docker push your-docker-registry/your-repo:latest
+        run: docker push 20170044/gaza-runimage:latest
 
