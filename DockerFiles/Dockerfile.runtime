@@ -1,0 +1,14 @@
+# Phase 2: Create a minimal image to run the application
+FROM alpine:latest
+
+# Set the working directory inside the container
+WORKDIR /app
+
+# Copy only the built binary from the builder stage
+COPY --from=gaza-builder:latest  /go/src/app/app .
+
+# Expose the port  application will run on
+EXPOSE 3030
+
+# Command to run the application
+CMD ["./app"]
