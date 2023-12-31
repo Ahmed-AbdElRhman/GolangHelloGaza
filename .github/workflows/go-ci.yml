@@ -33,7 +33,8 @@ jobs:
             ls -al
             go build -o myapp
             ls -al
-            mv myapp ./myapp
+            mkdir -p $GITHUB_WORKSPACE/bin
+            mv myapp $GITHUB_WORKSPACE/bin/
 #Why when separate the workflow the myapp is removed
   build-docker-image:
     runs-on: ubuntu-latest
