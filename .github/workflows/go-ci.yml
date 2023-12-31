@@ -39,12 +39,12 @@ jobs:
       - name: Set Up Docker
         uses: docker/setup-buildx-action@v1
 
-      - name: Tag Existing Docker Image
-        run: docker tag gaza-runimage:latest gaza-runimage:$(date '+%Y%m%d%H%M%S')
-      
       - name: Build Docker Image
-        run: docker build -t gaza-runimage:latest .
-      
+        run: docker build -t 20170044/hellogaza:latest .
+        
+      - name: Tag Existing Docker Image
+        run: docker tag 20170044/hellogaza:latest 20170044/hellogaza:$(date '+%Y%m%d%H%M%S')
+
       - name: Log in to Docker Registry
         uses: docker/login-action@v1
         with:
@@ -53,5 +53,5 @@ jobs:
           registry: hellogaza
 
       - name: Push Docker Image
-        run: docker push hellogaza/gaza-runimage:latest
+        run: docker push 20170044/hellogaza:latest
 
