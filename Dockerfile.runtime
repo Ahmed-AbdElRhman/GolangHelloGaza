@@ -1,4 +1,4 @@
-# Use a minimal base image
+# Use a minimal base image.
 FROM alpine:latest
 
 # Set the working directory inside the container
