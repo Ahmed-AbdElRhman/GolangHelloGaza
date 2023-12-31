@@ -9,6 +9,6 @@ func TestPass(t *testing.T) {
 	expected := true
 
 	if result != expected {
-		t.Errorf("DBConnect() returned %d, expected %d", result, expected)
+		t.Errorf("DBConnect() returned %b, expected %b", result, expected)
 	}
 }
