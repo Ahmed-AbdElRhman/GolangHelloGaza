@@ -5,10 +5,10 @@ import "testing"
 
 func TestPass(t *testing.T) {
 	//result := DBConnect()
-	result := true
-	expected := true
+	result := 1
+	expected := 1
 
 	if result != expected {
-		t.Errorf("DBConnect() returned %b, expected %b", result, expected)
+		t.Errorf("DBConnect() returned %d, expected %d", result, expected)
 	}
 }
