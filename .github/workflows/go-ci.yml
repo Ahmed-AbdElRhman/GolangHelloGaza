@@ -25,7 +25,11 @@ jobs:
         run: go test -v ./...
 
       - name: Build
-        run: go build -o myapp
+        run: |
+            echo "Current Directory: $(pwd)"
+            ls -al
+            go build -o myapp
+            ls -al
 
   build-docker-image:
     runs-on: ubuntu-latest
