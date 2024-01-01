@@ -33,21 +33,32 @@ jobs:
             ls -al
             go build -o myapp
             ls -al
-#Why when separate the workflow the myapp is removed (myapp removed after the step is ended)
-  # build-docker-image:
-  #   runs-on: ubuntu-latest
+      - name: 'Upload Goland Build File Artifact whith a retention period 1 day'
+        uses: actions/upload-artifact@v3
+        with:
+          name: myappFile
+          path: myapp
+          retention-days: 1
 
-  #   needs: build
+  build-docker-image:
+    runs-on: ubuntu-latest
 
-  #   steps:                                      
-  #     - name: Checkout Repository
-  #       uses: actions/checkout@v2 
+    needs: build
+
+    steps:                                      
+      - name: Checkout Repository
+        uses: actions/checkout@v2 
+
+      - name: Download myappFile artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: myappFile
 
       - name: Set Up Docker
         uses: docker/setup-buildx-action@v1
 
       - name: Build Docker Image
-        run: docker build -t 20170044/hellogaza:latest . #Why it is not work localy??
+        run: docker build -t 20170044/hellogaza:latest . #Why it is not work on the local images localy??
         
       - name: Tag Existing Docker Image
         run: docker tag 20170044/hellogaza:latest 20170044/hellogaza:$(date '+%Y%m%d%H%M%S')
