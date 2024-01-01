@@ -71,5 +71,8 @@ jobs:
 
 
       - name: Push Docker Image
-        run: docker push 20170044/hellogaza:latest
+        # run: docker push 20170044/hellogaza:latest
+        run: |
+          docker push 20170044/hellogaza:latest
+          docker push 20170044/hellogaza:$(date '+%Y%m%d%H%M%S')
 
