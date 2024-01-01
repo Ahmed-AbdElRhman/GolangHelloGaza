@@ -18,11 +18,11 @@ jobs:
         with:
           go-version: '1.21.4' 
 
-      # - name: Install golangci-lint
-      #   run: go get -u github.com/golangci/golangci-lint/cmd/golangci-lint
+      - name: Install golangci-lint
+        run: go get -u github.com/golangci/golangci-lint/cmd/golangci-lint
 
-      # - name: Run golangci-lint
-        # run: golangci-lint run
+      - name: Run golangci-lint
+        run: golangci-lint run
 
       - name: Run Tests
         run: go test -v ./...
@@ -45,6 +45,9 @@ jobs:
 
     needs: build
 
+    env:
+          TIMESTAMP: ${{ steps.build.outputs.timestamp }}
+
     steps:                                      
       - name: Checkout Repository
         uses: actions/checkout@v2 
@@ -61,7 +64,7 @@ jobs:
         run: docker build -t 20170044/hellogaza:latest . #Why it is not work on the local images localy??
         
       - name: Tag Existing Docker Image
-        run: docker tag 20170044/hellogaza:latest 20170044/hellogaza:$(date '+%Y%m%d%H%M%S')
+        run: docker tag 20170044/hellogaza:latest 20170044/hellogaza:${{ env.TIMESTAMP }}
 
       - name: Log in to Docker Registry
         uses: docker/login-action@v1
@@ -74,5 +77,5 @@ jobs:
         # run: docker push 20170044/hellogaza:latest
         run: |
           docker push 20170044/hellogaza:latest
-          docker push 20170044/hellogaza:$(date '+%Y%m%d%H%M%S')
+          docker push 20170044/hellogaza:${{ env.TIMESTAMP }}
 
