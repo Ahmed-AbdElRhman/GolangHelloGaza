@@ -33,6 +33,7 @@ jobs:
             ls -al
             go build -o myapp
             ls -al
+
       - name: 'Upload Goland Build File Artifact whith a retention period 1 day'
         uses: actions/upload-artifact@v3
         with:
@@ -45,12 +46,13 @@ jobs:
 
     needs: build
 
-    env:
-          TIMESTAMP: ${{ steps.build.outputs.timestamp }}
-
     steps:                                      
       - name: Checkout Repository
         uses: actions/checkout@v2 
+
+      - name: Get Timestamp
+        id: Timestamp
+        run: echo "::set-output name=dateTime::$(date '+%Y%m%d%H%M')"
 
       - name: Download myappFile artifact
         uses: actions/download-artifact@v3
@@ -64,7 +66,7 @@ jobs:
         run: docker build -t 20170044/hellogaza:latest . #Why it is not work on the local images localy??
         
       - name: Tag Existing Docker Image
-        run: docker tag 20170044/hellogaza:latest 20170044/hellogaza:${{ env.TIMESTAMP }}
+        run: docker tag 20170044/hellogaza:latest 20170044/hellogaza:${{ steps.Timestamp.outputs.dateTime }}
 
       - name: Log in to Docker Registry
         uses: docker/login-action@v1
@@ -77,5 +79,5 @@ jobs:
         # run: docker push 20170044/hellogaza:latest
         run: |
           docker push 20170044/hellogaza:latest
-          docker push 20170044/hellogaza:${{ env.TIMESTAMP }}
+          docker push 20170044/hellogaza:${{ steps.Timestamp.outputs.dateTime }}
 
