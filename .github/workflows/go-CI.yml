@@ -27,6 +27,12 @@ jobs:
       - name: Run Tests
         run: go test -v ./...
 
+      - name: Install gosec
+        run: go get -u github.com/securego/gosec/v2/cmd/gosec
+
+      - name: Run Security Scan
+        run: gosec -quiet ./...
+
       - name: Build
         run: |
             echo "Current Directory: $(pwd)"
